@@ -1,5 +1,5 @@
 import React from "react";
-import { ActivityIndicator, StyleSheet, View } from "react-native";
+import { ActivityIndicator, StyleSheet } from "react-native";
 import { Character, QueryCharacterArgs } from "../../graphql/types";
 import { gql, useQuery } from "@apollo/client";
 import ModalCharacter from "../../ui/CharacterModal";

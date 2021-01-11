@@ -1,6 +1,5 @@
-import React, { useMemo } from "react";
+import React from "react";
 import { Text, StyleSheet, FlatList, ActivityIndicator } from "react-native";
-import AnotherCard from "../../ui/AnotherCard";
 import Colors from "../../constants/Colors";
 import { Info, Location } from "../../graphql/types";
 import Center from "../../ui/CenterBox";

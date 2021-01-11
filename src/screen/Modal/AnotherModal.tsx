@@ -1,11 +1,6 @@
 import React from "react";
 import { ActivityIndicator, StyleSheet, SafeAreaView } from "react-native";
-import {
-  Location,
-  Episode,
-  QueryEpisodeArgs,
-  QueryLocationArgs,
-} from "../../graphql/types";
+import { QueryEpisodeArgs, QueryLocationArgs } from "../../graphql/types";
 import { gql, useQuery } from "@apollo/client";
 import ModalAnother from "../../ui/ModalAnother";
 import CenterBox from "../../ui/CenterBox";
