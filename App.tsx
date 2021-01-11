@@ -1,21 +1,28 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React from "react";
+import { useFonts } from "expo-font";
+import AppLoading from "expo-app-loading";
+import { client } from "./apollo";
+import { ApolloProvider } from "@apollo/client";
+// import Home from "./src/screen/Home/HomeScreen";
+// import Character from "./src/screen/Characters/CharactersScreen";
+// import Locations from "./src/screen/Locations/LocationsScreen";
+// import Episodes from "./src/screen/Episodes/EpisodesScreen";
+import Routes from "./src/navigation/RootStack";
 
-export default function App() {
+const App = () => {
+  const [loadingFonts] = useFonts({
+    BreeSerif: require("./assets/fonts/BreeSerif-Regular.ttf"),
+    Jockey: require("./assets/fonts/JockeyOne-Regular.ttf"),
+    OpenSans: require("./assets/fonts/OpenSans-Light.ttf"),
+  });
+  if (!loadingFonts) {
+    return <AppLoading />;
+  }
   return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <ApolloProvider client={client}>
+      <Routes />
+    </ApolloProvider>
   );
-}
+};
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default App;
