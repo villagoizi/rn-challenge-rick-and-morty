@@ -21,3 +21,7 @@ Clone this repository in your pc. Before your must be install expo-cli! This ste
 npm start
 ```
 
+
+
+###Images of App
+-Main screen
