@@ -1,5 +1,5 @@
 import React from "react";
-import { View, TouchableOpacity, Keyboard } from "react-native";
+import { View, TouchableOpacity, Keyboard, StyleSheet } from "react-native";
 import CustomButton from "../ui/CustomButton";
 import CustomInput from "../ui/CustomInput";
 import CustomRadioInput from "../ui/CustomRadioInput";
@@ -22,11 +22,7 @@ export default function Header({
   return (
     <TouchableOpacity activeOpacity={0.2} onPress={() => Keyboard.dismiss()}>
       <View
-        style={{
-          flexDirection: "row",
-          justifyContent: "space-around",
-          width: "100%",
-        }}
+        style={styles.screen}
       >
         <CustomInput
           propsInp={{
@@ -67,3 +63,10 @@ export default function Header({
     </TouchableOpacity>
   );
 }
+
+const styles = StyleSheet.create({
+  screen: {
+    flexDirection: "row",
+    justifyContent: "space-around",
+    width: "100%",},
+})
