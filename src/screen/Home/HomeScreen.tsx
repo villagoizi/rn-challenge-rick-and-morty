@@ -33,9 +33,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: Colors.primary,
   },
-  container: {
-    marginHorizontal: "2.5%",
-  },
   header: {
     height: "50%",
     justifyContent: "center",
