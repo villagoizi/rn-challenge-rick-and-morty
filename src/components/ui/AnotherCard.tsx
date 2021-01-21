@@ -4,19 +4,17 @@ import {
   Text,
   StyleSheet,
   TouchableOpacity,
-  Image,
   Dimensions,
   Platform,
   StyleProp,
   ViewStyle,
 } from "react-native";
-import Colors from "../constants/Colors";
+import Colors from "../../constants/Colors";
 
 interface CardProps {
   onPress?: () => void;
-  image?: string | undefined;
-  name?: string | null;
-  id?: string | null;
+  name: string;
+  id: string;
   styleTouch?: StyleProp<ViewStyle>;
   dimension?: string;
   episode?: string;
@@ -25,14 +23,12 @@ interface CardProps {
 export default function Card(props: CardProps) {
   return (
     <TouchableOpacity
-      onPress={props.onPress}
       style={[styles.screen, props.styleTouch]}
+      onPress={props.onPress}
     >
-      <View style={styles.header}>
-        <Image source={{ uri: props.image }} style={styles.img} />
-      </View>
+      <Text style={styles.header}>{props.name}</Text>
       <View style={styles.body}>
-        <Text style={styles.text}>{props.name}</Text>
+        <Text style={styles.text}>{props.dimension || props.episode}</Text>
       </View>
     </TouchableOpacity>
   );
@@ -40,9 +36,8 @@ export default function Card(props: CardProps) {
 
 const styles = StyleSheet.create({
   screen: {
-    height: 50,
+    minHeight: 100,
     width: Dimensions.get("window").width < 500 ? "100%" : "45%",
-    flexDirection: "row",
     backgroundColor: Colors.primary,
     marginVertical: 6,
     borderRadius: 10,
@@ -50,26 +45,25 @@ const styles = StyleSheet.create({
     shadowRadius: 6,
     shadowOffset: { height: 0, width: 2 },
     shadowColor: Colors.primary,
-    elevation: 2,
+    elevation: 1,
   },
   header: {
-    width: 50,
-    height: 50,
-  },
-  img: {
-    width: "100%",
-    height: "100%",
+    fontFamily: "Jockey",
+    fontWeight: "bold",
+    padding: 10,
+    fontSize: 18,
+    backgroundColor: "white",
+    color: Colors.accent,
   },
   body: {
     flex: 1,
     justifyContent: "center",
     alignItems: "flex-start",
-    paddingHorizontal: 10,
+    padding: 10,
   },
   text: {
-    fontSize: 18,
+    fontSize: 14,
+    fontFamily: "BreeSerif",
     color: Colors.accent,
-    fontFamily: "Jockey",
-    fontWeight: "bold",
   },
 });

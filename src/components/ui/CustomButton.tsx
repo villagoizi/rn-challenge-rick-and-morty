@@ -1,6 +1,5 @@
 import React from "react";
 import {
-  View,
   Text,
   StyleSheet,
   TouchableOpacity,
@@ -9,7 +8,7 @@ import {
   TextStyle,
   StyleProp,
 } from "react-native";
-import Colors from "../constants/Colors";
+import Colors from "../../constants/Colors";
 
 interface CustomButtonProps {
   children: React.ReactNode;

@@ -1,5 +1,4 @@
 import React from "react";
-// import {} from '@react-navigation/stack'
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import CharactersScreen from "../screen/Characters/CharactersScreen";
 import LocationsScreen from "../screen/Locations/LocationsScreen";

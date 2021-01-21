@@ -19,20 +19,23 @@ interface FiltersVariables {
   };
 }
 
-type Data = {
+export type Data<P extends AllTypeData> = {
   [key: string]: {
     info: Info;
-    results: Character[] | Location[] | Episode[];
+    results: P[];
   };
 };
+
+type AllTypeData = Character | Location | Episode;
+
+export type SwitchTypes = "characters" | "locations" | "episodes";
+
 export interface StateChange {
   search: string;
   filter?: string;
 }
 
-export default function useSearch(
-  type: "characters" | "locations" | "episodes"
-) {
+export default function useSearch(type: SwitchTypes) {
   const [change, setChange] = React.useState<StateChange>({
     search: "",
     filter: "name",
@@ -44,7 +47,7 @@ export default function useSearch(
   );
   const [fetching, setFetching] = React.useState(false);
   const { data, loading, fetchMore, refetch, error } = useQuery<
-    any,
+    Data<AllTypeData>,
     QueryCharactersArgs | QueryEpisodesArgs | QueryLocationsArgs
   >(query, {
     variables,
@@ -78,7 +81,7 @@ export default function useSearch(
 
   const loadMore = () => {
     if (!loading) {
-      const nextPage = (data as Data)[type].info.next;
+      const nextPage = (data as Data<AllTypeData>)[type].info.next;
       if (!nextPage) {
         return;
       }
@@ -87,7 +90,7 @@ export default function useSearch(
           query,
           variables: {
             filter: (variables as FiltersVariables).filter,
-            page: (data as Data)[type].info.next,
+            page: (data as Data<AllTypeData>)[type].info.next,
           },
         });
       }

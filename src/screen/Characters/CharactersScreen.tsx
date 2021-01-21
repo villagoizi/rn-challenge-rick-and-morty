@@ -1,96 +1,46 @@
 import React from "react";
-import { Text, StyleSheet, FlatList, ActivityIndicator } from "react-native";
-import Card from "../../ui/Card";
-import Colors from "../../constants/Colors";
-import { Character, Info } from "../../graphql/types";
+import { StyleSheet, FlatList } from "react-native";
+import { useNavigation } from "@react-navigation/native";
+import Card from "../../components/ui/Card";
+import { Character } from "../../graphql/types";
 import { PropsRoot } from "../../navigation/types";
-import Center from "../../ui/CenterBox";
-import useQuerySearch from "../../hook/useQuerySearch";
-import Header from "../../components/Header";
+import { Data } from "../../hook/useQuerySearch";
+import { withHandleQuery, ScreenProps } from "../../hocs/withHandleQuery";
 
-interface CharactersScreenProps extends PropsRoot<"MainStack"> {}
-
-type Data = {
-  characters: {
-    info: Info;
-    results: Character[];
-  };
-};
-
-export default function CharactersScreen(props: CharactersScreenProps) {
-  const {
-    onSearchHandle,
-    change,
-    loadMore,
-    resetAll,
-    data,
-    loading,
-    onRefresh,
-    error,
-  } = useQuerySearch("characters");
-
+function CharactersScreen(props: ScreenProps<Data<Character>>) {
+  let { data, loadMore, loading, onRefresh } = props;
+  const history = useNavigation<PropsRoot<"CharacterModal">["navigation"]>();
   const renderItem = ({ item }: { item: Character }) => (
     <Card
       name={item.name}
       image={item.image as string | undefined}
       onPress={() =>
-        (props as PropsRoot<"CharacterModal"> &
-          PropsRoot<"MainStack">).navigation.navigate("CharacterModal", {
+        history.navigate("CharacterModal", {
           id: item.id as string,
         })
       }
     />
   );
-
   return (
     <>
-      <Header
-        change={change}
-        onSearchHandle={onSearchHandle}
-        resetAll={resetAll}
+      <FlatList
+        data={(data as Data<Character>).characters?.results}
+        renderItem={renderItem}
+        keyExtractor={(item: Character, i) => item.id as string}
+        contentContainerStyle={styles.listGrid}
+        onEndReached={() => loadMore()}
+        refreshing={loading}
+        onRefresh={onRefresh}
+        onEndReachedThreshold={0.5}
       />
-      {loading && !data && (
-        <Center>
-          <ActivityIndicator size="large" color={Colors.primary} />
-        </Center>
-      )}
-      {!loading && data && (data as Data).characters ? (
-        <FlatList
-          data={(data as Data).characters?.results}
-          renderItem={renderItem}
-          keyExtractor={(item: Character, i) => item.id as string}
-          contentContainerStyle={styles.listGrid}
-          onEndReached={() => loadMore()}
-          refreshing={loading}
-          onRefresh={onRefresh}
-          onEndReachedThreshold={0.5}
-        />
-      ) : (error as any) ? (
-        <Center>
-          {error?.graphQLErrors.map(({ message }: any, i: number) => (
-            <Text style={styles.msg} key={i}>
-              Ops! There is no match with their search
-            </Text>
-          ))}
-        </Center>
-      ) : (
-        <Center>
-          <Text style={styles.msg}>Write to search...</Text>
-        </Center>
-      )}
     </>
   );
 }
 
 const styles = StyleSheet.create({
-  screen: {
-    flex: 1,
-    backgroundColor: Colors.primary,
-  },
   listGrid: {
     marginHorizontal: "2.5%",
   },
-  msg: {
-    color: "#a1a1a1",
-  },
 });
+
+export default withHandleQuery(CharactersScreen, () => "characters");

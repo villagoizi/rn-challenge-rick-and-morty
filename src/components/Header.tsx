@@ -1,8 +1,8 @@
 import React from "react";
 import { View, TouchableOpacity, Keyboard, StyleSheet } from "react-native";
-import CustomButton from "../ui/CustomButton";
-import CustomInput from "../ui/CustomInput";
-import CustomRadioInput from "../ui/CustomRadioInput";
+import CustomButton from "./ui/CustomButton";
+import CustomInput from "./ui/CustomInput";
+import CustomRadioInput from "./ui/CustomRadioInput";
 import { StateChange } from "../hook/useQuerySearch";
 import Colors from "../constants/Colors";
 
@@ -20,7 +20,8 @@ export default function Header({
   const [disabled, setDisabled] = React.useState(true);
 
   return (
-    <TouchableOpacity activeOpacity={0.2} onPress={() => Keyboard.dismiss()}>
+    <>
+      {/* // <TouchableOpacity activeOpacity={0.2} onPress={() => Keyboard.dismiss()}> */}
       <View style={styles.screen}>
         <CustomInput
           placeholder="Write to search..."
@@ -56,7 +57,8 @@ export default function Header({
           onPress={() => onSearchHandle("filter", "type")}
         />
       </View>
-    </TouchableOpacity>
+      {/* </TouchableOpacity> */}
+    </>
   );
 }
 
