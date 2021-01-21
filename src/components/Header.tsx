@@ -21,20 +21,16 @@ export default function Header({
 
   return (
     <TouchableOpacity activeOpacity={0.2} onPress={() => Keyboard.dismiss()}>
-      <View
-        style={styles.screen}
-      >
+      <View style={styles.screen}>
         <CustomInput
-          propsInp={{
-            placeholder: "Write to search...",
-            onChangeText: (text) => {
-              onSearchHandle("search", text);
-              if ((change.search as string).length > 0) {
-                setDisabled(false);
-              }
-            },
-            value: change.search,
+          placeholder="Write to search..."
+          onChangeText={(text: string) => {
+            onSearchHandle("search", text);
+            if ((change.search as string).length > 0) {
+              setDisabled(false);
+            }
           }}
+          value={change.search}
         />
         <CustomButton
           styleText={{ color: "white" }}
@@ -68,5 +64,6 @@ const styles = StyleSheet.create({
   screen: {
     flexDirection: "row",
     justifyContent: "space-around",
-    width: "100%",},
-})
+    width: "100%",
+  },
+});
