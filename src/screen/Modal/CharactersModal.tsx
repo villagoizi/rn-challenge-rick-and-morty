@@ -1,11 +1,9 @@
 import React from "react";
-import { ActivityIndicator, StyleSheet } from "react-native";
 import { Character, QueryCharacterArgs } from "../../graphql/types";
 import { gql, useQuery } from "@apollo/client";
-import ModalCharacter from "../../ui/CharacterModal";
-import CenterBox from "../../ui/CenterBox";
+import ModalCharacter from "../../components/ui/CharacterModal";
+import Spinner from "../../components/ui/Spinner";
 import { PropsRoot } from "../../navigation/types";
-import Colors from "../../constants/Colors";
 
 interface CharactersModalProps extends PropsRoot<"CharacterModal"> {}
 
@@ -17,28 +15,18 @@ export default function CharactersModal(props: CharactersModalProps) {
   const { loading, data } = useQuery<Data, QueryCharacterArgs>(GET_CHARACTER, {
     variables: { id: props.route.params.id },
   });
+
+  if (loading) {
+    return <Spinner />;
+  }
+
   return (
-    <>
-      {loading && (
-        <CenterBox>
-          <ActivityIndicator size="small" color={Colors.primary} />
-        </CenterBox>
-      )}
-      {!loading && data && data.character && (
-        <ModalCharacter
-          onPress={() => props.navigation.goBack()}
-          character={data?.character}
-        />
-      )}
-    </>
+    <ModalCharacter
+      onPress={() => props.navigation.goBack()}
+      character={data?.character}
+    />
   );
 }
-
-const styles = StyleSheet.create({
-  screen: {
-    flex: 1,
-  },
-});
 
 const GET_CHARACTER = gql`
   query getCharacter($id: ID!) {

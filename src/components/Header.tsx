@@ -1,8 +1,8 @@
 import React from "react";
-import { View, TouchableOpacity, Keyboard } from "react-native";
-import CustomButton from "../ui/CustomButton";
-import CustomInput from "../ui/CustomInput";
-import CustomRadioInput from "../ui/CustomRadioInput";
+import { View, TouchableOpacity, Keyboard, StyleSheet } from "react-native";
+import CustomButton from "./ui/CustomButton";
+import CustomInput from "./ui/CustomInput";
+import CustomRadioInput from "./ui/CustomRadioInput";
 import { StateChange } from "../hook/useQuerySearch";
 import Colors from "../constants/Colors";
 
@@ -20,25 +20,18 @@ export default function Header({
   const [disabled, setDisabled] = React.useState(true);
 
   return (
-    <TouchableOpacity activeOpacity={0.2} onPress={() => Keyboard.dismiss()}>
-      <View
-        style={{
-          flexDirection: "row",
-          justifyContent: "space-around",
-          width: "100%",
-        }}
-      >
+    <>
+      {/* // <TouchableOpacity activeOpacity={0.2} onPress={() => Keyboard.dismiss()}> */}
+      <View style={styles.screen}>
         <CustomInput
-          propsInp={{
-            placeholder: "Write to search...",
-            onChangeText: (text) => {
-              onSearchHandle("search", text);
-              if ((change.search as string).length > 0) {
-                setDisabled(false);
-              }
-            },
-            value: change.search,
+          placeholder="Write to search..."
+          onChangeText={(text: string) => {
+            onSearchHandle("search", text);
+            if (change.search?.length > 0) {
+              setDisabled(false);
+            }
           }}
+          value={change.search}
         />
         <CustomButton
           styleText={{ color: "white" }}
@@ -64,6 +57,15 @@ export default function Header({
           onPress={() => onSearchHandle("filter", "type")}
         />
       </View>
-    </TouchableOpacity>
+      {/* </TouchableOpacity> */}
+    </>
   );
 }
+
+const styles = StyleSheet.create({
+  screen: {
+    flexDirection: "row",
+    justifyContent: "space-around",
+    width: "100%",
+  },
+});

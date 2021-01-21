@@ -1,6 +1,6 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
-import AnotherCard from "../ui/AnotherCard";
+import AnotherCard from "./ui/AnotherCard";
 import { Location } from "../graphql/types";
 
 interface ListLocationProps {
@@ -20,9 +20,3 @@ export default function ListLocation({ item, onPress }: ListLocationProps) {
     />
   );
 }
-
-const styles = StyleSheet.create({
-  screen: {
-    flex: 1,
-  },
-});

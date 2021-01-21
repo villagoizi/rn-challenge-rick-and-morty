@@ -1,28 +1,21 @@
 import React from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  TextInput,
-  StyleProp,
-  ViewStyle,
-  TextStyle,
-  TextInputProps,
-} from "react-native";
-import Colors from "../constants/Colors";
+import { View, StyleSheet, TextInput } from "react-native";
+import Colors from "../../constants/Colors";
 
 interface CustomInputProps {
-  styleCtn?: StyleProp<ViewStyle>;
-  styleInp?: StyleProp<TextStyle>;
-  propsInp?: TextInputProps;
+  placeholder?: string;
+  onChangeText?: (text: string) => void;
+  value?: string | undefined;
 }
 
 export default function CustomInput(props: CustomInputProps) {
   return (
-    <View style={[styles.container, props.styleCtn]}>
+    <View style={styles.container}>
       <TextInput
-        style={[styles.input, props.propsInp?.style]}
-        {...props.propsInp}
+        style={styles.input}
+        placeholder={props.placeholder}
+        onChangeText={props.onChangeText}
+        value={props.value}
       />
     </View>
   );

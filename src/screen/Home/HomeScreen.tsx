@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 import Colors from "../../constants/Colors";
-import CustomButton from "../../ui/CustomButton";
+import CustomButton from "../../components/ui/CustomButton";
 import { PropsMain } from "../../navigation/types";
 
 interface HomeScreenProps extends PropsMain<"Home"> {}
@@ -15,7 +15,10 @@ export default function HomeScreen(props: HomeScreenProps) {
       </View>
       <View style={styles.footer}>
         <CustomButton
-          onPress={() => props.navigation.navigate("Filter")}
+          onPress={() => {
+            props.navigation.navigate("Filter");
+            console.log("Is work");
+          }}
           styleText={{ color: "white" }}
         >
           ENTER

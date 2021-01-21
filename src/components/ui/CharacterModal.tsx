@@ -7,8 +7,8 @@ import {
   Dimensions,
   SafeAreaView,
 } from "react-native";
-import { Character } from "../graphql/types";
-import Colors from "../constants/Colors";
+import { Character } from "../../graphql/types";
+import Colors from "../../constants/Colors";
 import CustomButton from "./CustomButton";
 
 interface CharacterModalProps {
@@ -23,11 +23,13 @@ export default function CharacterModal({
   return (
     <SafeAreaView style={styles.screen}>
       <View style={styles.header}>
-        <Image
-          style={styles.img}
-          resizeMode="cover"
-          source={{ uri: character?.image || undefined }}
-        />
+        {character?.image && (
+          <Image
+            style={styles.img}
+            resizeMode="cover"
+            source={{ uri: character?.image }}
+          />
+        )}
       </View>
       <Text style={styles.title}>{character?.name}</Text>
       <View style={styles.description}>

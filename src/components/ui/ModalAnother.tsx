@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Text, StyleSheet, Dimensions, SafeAreaView } from "react-native";
-import { Location, Episode, Character } from "../graphql/types";
-import Colors from "../constants/Colors";
+import { Location, Episode, Character } from "../../graphql/types";
+import Colors from "../../constants/Colors";
 import CustomButton from "./CustomButton";
 import Card from "./Card";
 import { FlatList } from "react-native-gesture-handler";
@@ -17,9 +17,9 @@ export default function ModalAnother({
   onPress,
   filter,
 }: ModalAnotherProps) {
-  const renderItems = ({ item }: { item: Character }) => {
-    return <Card id={item.id} name={item.name} image={item.image as string} />;
-  };
+  const renderItems = ({ item }: { item: Character }) => (
+    <Card id={item.id} name={item.name} image={item.image as string} />
+  );
 
   return (
     <SafeAreaView style={styles.screen}>

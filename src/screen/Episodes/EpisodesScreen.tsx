@@ -1,34 +1,15 @@
 import React from "react";
-import { Text, StyleSheet, FlatList, ActivityIndicator } from "react-native";
-import AnotherCard from "../../ui/AnotherCard";
-import Colors from "../../constants/Colors";
-import { Info, Episode } from "../../graphql/types";
-import Center from "../../ui/CenterBox";
+import { StyleSheet, FlatList } from "react-native";
+import { useNavigation } from "@react-navigation/native";
+import AnotherCard from "../../components/ui/AnotherCard";
+import { Episode } from "../../graphql/types";
 import { PropsRoot } from "../../navigation/types";
+import { Data } from "../../hook/useQuerySearch";
+import { ScreenProps, withHandleQuery } from "../../hocs/withHandleQuery";
 
-import useQuerySearch from "../../hook/useQuerySearch";
-import Header from "../../components/Header";
-
-interface EpisodesScreenProps {}
-
-type Data = {
-  episodes: {
-    info: Info;
-    results: Episode[];
-  };
-};
-
-export default function EpisodesScreen(props: EpisodesScreenProps) {
-  const {
-    onSearchHandle,
-    change,
-    loadMore,
-    resetAll,
-    data,
-    loading,
-    onRefresh,
-    error,
-  } = useQuerySearch("episodes");
+function EpisodesScreen(props: ScreenProps<Data<Episode>>) {
+  const history = useNavigation<PropsRoot<"AnotherModal">["navigation"]>();
+  const { onRefresh, loading, loadMore, data } = props;
 
   const renderItem = ({ item }: { item: Episode }) => (
     <AnotherCard
@@ -36,8 +17,7 @@ export default function EpisodesScreen(props: EpisodesScreenProps) {
       name={item.name as string}
       id={item.id as string}
       onPress={() =>
-        (props as PropsRoot<"AnotherModal"> &
-          PropsRoot<"MainStack">).navigation.navigate("AnotherModal", {
+        history.navigate("AnotherModal", {
           id: item.id as string,
           filter: "episode",
         })
@@ -46,56 +26,23 @@ export default function EpisodesScreen(props: EpisodesScreenProps) {
   );
 
   return (
-    <>
-      <Header
-        change={change}
-        onSearchHandle={onSearchHandle}
-        resetAll={resetAll}
-      />
-      {loading && !data && (
-        <Center>
-          <ActivityIndicator size="large" color={Colors.primary} />
-        </Center>
-      )}
-      {!loading && data && (data as Data).episodes ? (
-        <FlatList
-          data={(data as Data).episodes.results}
-          renderItem={renderItem}
-          keyExtractor={(item: Episode, i) =>
-            (item.id as string) || i.toString()
-          }
-          contentContainerStyle={styles.listGrid}
-          onEndReached={() => loadMore()}
-          refreshing={loading}
-          onRefresh={() => onRefresh()}
-          onEndReachedThreshold={0.5}
-        />
-      ) : (error as any) ? (
-        <Center>
-          {error?.graphQLErrors.map(({ message }, i) => (
-            <Text style={styles.msg} key={i}>
-              Ops! There is no match with their search
-            </Text>
-          ))}
-        </Center>
-      ) : (
-        <Center>
-          <Text style={styles.msg}>Write to search...</Text>
-        </Center>
-      )}
-    </>
+    <FlatList
+      data={(data as Data<Episode>).episodes.results}
+      renderItem={renderItem}
+      keyExtractor={(item: Episode, i) => item.id as string}
+      contentContainerStyle={styles.listGrid}
+      onEndReached={() => loadMore()}
+      refreshing={loading}
+      onRefresh={() => onRefresh()}
+      onEndReachedThreshold={0.5}
+    />
   );
 }
 
 const styles = StyleSheet.create({
-  screen: {
-    flex: 1,
-    backgroundColor: Colors.primary,
-  },
   listGrid: {
     marginHorizontal: "2.5%",
   },
-  msg: {
-    color: "#a1a1a1",
-  },
 });
+
+export default withHandleQuery(EpisodesScreen, () => "episodes");

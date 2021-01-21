@@ -2,8 +2,9 @@ import React from "react";
 import { ActivityIndicator, StyleSheet, SafeAreaView } from "react-native";
 import { QueryEpisodeArgs, QueryLocationArgs } from "../../graphql/types";
 import { gql, useQuery } from "@apollo/client";
-import ModalAnother from "../../ui/ModalAnother";
-import CenterBox from "../../ui/CenterBox";
+import ModalAnother from "../../components/ui/ModalAnother";
+import CenterBox from "../../components/ui/CenterBox";
+import Spinner from "../../components/ui/Spinner";
 import { PropsRoot } from "../../navigation/types";
 import Colors from "../../constants/Colors";
 
@@ -11,44 +12,28 @@ interface AnotherModalProps extends PropsRoot<"AnotherModal"> {}
 
 export default function AnotherModal(props: AnotherModalProps) {
   const { id, filter } = props.route.params;
-
+  let isLocation = filter === "location";
   const { loading, data } = useQuery<any, QueryEpisodeArgs | QueryLocationArgs>(
-    filter === "location" ? GET_LOCATION : GET_EPISODE,
+    isLocation ? GET_LOCATION : GET_EPISODE,
     {
       variables: { id },
     }
   );
-  const itemProp =
-    data && !!data.episode
-      ? data.episode
-      : data && !!data.location
-      ? data.location
-      : undefined;
+  if (loading) {
+    return <Spinner />;
+  }
+  const itemProp = isLocation ? data.location : data.episode;
+
   return (
-    <>
-      {loading && (
-        <CenterBox>
-          <ActivityIndicator size="small" color={Colors.primary} />
-        </CenterBox>
-      )}
-      {!loading && !!data && itemProp && (
-        <SafeAreaView style={{ flex: 1 }}>
-          <ModalAnother
-            onPress={() => props.navigation.goBack()}
-            data={itemProp}
-            filter={filter}
-          />
-        </SafeAreaView>
-      )}
-    </>
+    <SafeAreaView style={{ flex: 1 }}>
+      <ModalAnother
+        onPress={() => props.navigation.goBack()}
+        data={itemProp}
+        filter={filter}
+      />
+    </SafeAreaView>
   );
 }
-
-const styles = StyleSheet.create({
-  screen: {
-    flex: 1,
-  },
-});
 
 const GET_LOCATION = gql`
   query getLocation($id: ID!) {
