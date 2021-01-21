@@ -26,7 +26,7 @@ type Data = {
   };
 };
 export interface StateChange {
-  search?: string;
+  search: string;
   filter?: string;
 }
 

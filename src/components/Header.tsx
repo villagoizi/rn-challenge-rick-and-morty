@@ -26,7 +26,7 @@ export default function Header({
           placeholder="Write to search..."
           onChangeText={(text: string) => {
             onSearchHandle("search", text);
-            if ((change.search as string).length > 0) {
+            if (change.search?.length > 0) {
               setDisabled(false);
             }
           }}
