@@ -29,20 +29,18 @@ export default function CharactersScreen(props: CharactersScreenProps) {
     error,
   } = useQuerySearch("characters");
 
-  const renderItem = ({ item }: { item: Character }) => {
-    return (
-      <Card
-        name={item.name}
-        image={item.image as string | undefined}
-        onPress={() =>
-          (props as PropsRoot<"CharacterModal"> &
-            PropsRoot<"MainStack">).navigation.navigate("CharacterModal", {
-            id: item.id as string,
-          })
-        }
-      />
-    );
-  };
+  const renderItem = ({ item }: { item: Character }) => (
+    <Card
+      name={item.name}
+      image={item.image as string | undefined}
+      onPress={() =>
+        (props as PropsRoot<"CharacterModal"> &
+          PropsRoot<"MainStack">).navigation.navigate("CharacterModal", {
+          id: item.id as string,
+        })
+      }
+    />
+  );
 
   return (
     <>
