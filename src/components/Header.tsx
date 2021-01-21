@@ -20,8 +20,7 @@ export default function Header({
   const [disabled, setDisabled] = React.useState(true);
 
   return (
-    <>
-      {/* // <TouchableOpacity activeOpacity={0.2} onPress={() => Keyboard.dismiss()}> */}
+    <TouchableOpacity activeOpacity={0.2} onPress={() => Keyboard.dismiss()}>
       <View style={styles.screen}>
         <CustomInput
           placeholder="Write to search..."
@@ -57,8 +56,7 @@ export default function Header({
           onPress={() => onSearchHandle("filter", "type")}
         />
       </View>
-      {/* </TouchableOpacity> */}
-    </>
+    </TouchableOpacity>
   );
 }
 
