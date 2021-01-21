@@ -15,10 +15,7 @@ export default function HomeScreen(props: HomeScreenProps) {
       </View>
       <View style={styles.footer}>
         <CustomButton
-          onPress={() => {
-            props.navigation.navigate("Filter");
-            console.log("Is work");
-          }}
+          onPress={() => props.navigation.navigate("Filter")}
           styleText={{ color: "white" }}
         >
           ENTER
@@ -32,9 +29,6 @@ const styles = StyleSheet.create({
   screen: {
     flex: 1,
     backgroundColor: Colors.primary,
-  },
-  container: {
-    marginHorizontal: "2.5%",
   },
   header: {
     height: "50%",

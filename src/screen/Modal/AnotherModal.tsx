@@ -1,12 +1,10 @@
 import React from "react";
-import { ActivityIndicator, StyleSheet, SafeAreaView } from "react-native";
+import { SafeAreaView } from "react-native";
 import { QueryEpisodeArgs, QueryLocationArgs } from "../../graphql/types";
 import { gql, useQuery } from "@apollo/client";
 import ModalAnother from "../../components/ui/ModalAnother";
-import CenterBox from "../../components/ui/CenterBox";
 import Spinner from "../../components/ui/Spinner";
 import { PropsRoot } from "../../navigation/types";
-import Colors from "../../constants/Colors";
 
 interface AnotherModalProps extends PropsRoot<"AnotherModal"> {}
 
