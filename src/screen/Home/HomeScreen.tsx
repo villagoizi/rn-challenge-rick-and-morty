@@ -15,10 +15,7 @@ export default function HomeScreen(props: HomeScreenProps) {
       </View>
       <View style={styles.footer}>
         <CustomButton
-          onPress={() => {
-            props.navigation.navigate("Filter");
-            console.log("Is work");
-          }}
+          onPress={() => props.navigation.navigate("Filter")}
           styleText={{ color: "white" }}
         >
           ENTER
