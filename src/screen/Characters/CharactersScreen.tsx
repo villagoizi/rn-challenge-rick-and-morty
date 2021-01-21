@@ -58,7 +58,7 @@ export default function CharactersScreen(props: CharactersScreenProps) {
         <FlatList
           data={(data as Data).characters?.results}
           renderItem={renderItem}
-          keyExtractor={(item, i) => item.id || i.toString()}
+          keyExtractor={(item: Character, i) => item.id as string}
           contentContainerStyle={styles.listGrid}
           onEndReached={() => loadMore()}
           refreshing={loading}

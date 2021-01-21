@@ -61,9 +61,7 @@ export default function EpisodesScreen(props: EpisodesScreenProps) {
         <FlatList
           data={(data as Data).episodes.results}
           renderItem={renderItem}
-          keyExtractor={(item: Episode, i) =>
-            (item.id as string) || i.toString()
-          }
+          keyExtractor={(item: Episode, i) => item.id as string}
           contentContainerStyle={styles.listGrid}
           onEndReached={() => loadMore()}
           refreshing={loading}

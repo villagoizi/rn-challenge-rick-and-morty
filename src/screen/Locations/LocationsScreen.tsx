@@ -42,7 +42,7 @@ export default function LocationsScreen(props: LocationsScreenProps) {
     />
   );
   const keyExtractor = React.useCallback(
-    (item: Location, i) => (item.id as string) || i.toString(),
+    (item: Location, i) => item.id as string,
     []
   );
   return (
